@@ -1,0 +1,10 @@
+# Visual Studio temporary files
+.vs/
+[Dd]ebug/
+[Rr]elease permission errors for you and anyone else working on the project.
+
+### 1. The Immediate Workaround
+If you just want to get the command to work right/
+*.user
+*.suo
+*.sln.docstates
