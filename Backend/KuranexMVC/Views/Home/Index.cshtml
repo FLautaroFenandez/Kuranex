@@ -1,8 +1,29 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+ *@
+
+@{
+    ViewData["Title"] = "Inicio - Kuranex";
+}
+
+<div class="text-center" style="margin-top: 10vh;">
+    <h1 class="display-4" style="color: #1A202C; font-weight: bold;">
+        Bienvenido a Kuranex
+    </h1>
+
+    <p class="lead text-muted mt-3 mb-5">
+        Sistema de monitoreo remoto para familiares de pacientes internados.
+    </p>
+
+    <div class="mt-4">
+        <a asp-controller="Pacientes" asp-action="Index" class="btn btn-lg px-5 py-3 shadow-sm" style="background-color: #2A9D8F; color: white; border-radius: 12px; font-weight: 500;">
+            Ingresar al Panel de Pacientes
+        </a>
+    </div>
 </div>

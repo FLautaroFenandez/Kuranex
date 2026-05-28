@@ -1,11 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using KuranexMVC.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// 1. Agregar servicios al contenedor (ANTES del Build)
 builder.Services.AddControllersWithViews();
 
+// Agregamos el contexto de base de datos usando SQL Server
+builder.Services.AddDbContext<KuranexDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// 2. Construir la app (SÓLO UNA VEZ)
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 3. Configurar el pipeline de solicitudes HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -15,15 +23,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

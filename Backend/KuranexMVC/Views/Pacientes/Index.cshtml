@@ -1,0 +1,73 @@
+﻿@model IEnumerable<KuranexMVC.Models.Paciente>
+
+@{
+    ViewData["Title"] = "Pacientes Activos - Kuranex";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4" style="color: #1A202C; font-weight: bold;">Pacientes Activos (Monitoreo)</h2>
+    <hr />
+
+    <div class="row">
+        @foreach (var paciente in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm" style="border-radius: 16px; border: none; background-color: #FFFFFF;">
+                    <div class="card-body">
+                        <h4 class="card-title" style="color: #2A9D8F; font-weight: bold;">
+                            @paciente.Apellido, @paciente.Nombre
+                        </h4>
+
+                        <p class="mb-2" style="font-size: 0.95em; color: #1A202C;">
+                            Familiar a cargo: <strong>@(paciente.Familiar?.Nombre) @(paciente.Familiar?.Apellido)</strong>
+                        </p>
+
+                        <h6 class="card-subtitle mb-3 text-muted">
+                            Habitación: <strong>@paciente.Habitacion</strong>
+                        </h6>
+                        <p class="card-text mb-4">
+                            <span class="badge" style="background-color: #E76F51; color: white;">Diagnóstico</span><br />
+                            @paciente.DiagnosticoPrincipal
+                        </p>
+
+                        <hr />
+
+                        <h6 style="color: #2A9D8F; font-weight: bold;">Últimos Signos Vitales</h6>
+
+                        @if (paciente.RegistrosVitales != null && paciente.RegistrosVitales.Any())
+                        {
+                            <ul class="list-group list-group-flush mb-3">
+                                @foreach (var sv in paciente.RegistrosVitales.OrderByDescending(r => r.FechaHora))
+                                {
+                                    <li class="list-group-item px-0" style="font-size: 0.9em; background-color: transparent;">
+                                        <strong>@sv.FechaHora.ToString("HH:mm") hs</strong> &bull;
+                                        FC: @sv.FrecuenciaCardiaca lpm |
+                                        SpO2: @sv.SaturacionOxigeno% |
+                                        Temp: @sv.Temperatura °C
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted" style="font-size: 0.9em;"><em>Sin registros de sensores aún.</em></p>
+                        }
+                    </div>
+
+                    <div class="card-footer bg-transparent border-top-0 pb-3">
+                        <a href="#" class="btn w-100" style="background-color: #2A9D8F; color: white; border-radius: 8px;">
+                            Ver Historial Completo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            No hay pacientes registrados en el sistema. <a href="/Pacientes/CargarDatosDePrueba">Cargar datos de prueba</a>.
+        </div>
+    }
+</div>
